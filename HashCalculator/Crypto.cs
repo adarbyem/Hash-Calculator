@@ -1,7 +1,7 @@
-﻿
-using System.Text;
+﻿using System.Text;
 using System.Security.Cryptography;
 using System.IO;
+using System;
 
 namespace HashCalculator
 {
@@ -25,32 +25,43 @@ namespace HashCalculator
         //3 = SHA512
         public string doHash(int hashType, string file)
         {
-            //local variables
-            FileStream stream = new FileStream(file, FileMode.Open, FileAccess.Read);
-            
-            byte[] buffer = new byte[stream.Length];
-            stream.Read(buffer, 0, System.Convert.ToInt32(stream.Length));
-
-            switch (hashType)
+            try
             {
-                case 1:
-                    //Create Instance of MD5
-                    MD5 md5Hash = MD5.Create();
-                    buffer = md5Hash.ComputeHash(buffer);
-                    //Hash Output
-                    return (buildString(buffer));
-                case 2:
-                    //Create Instance of SHA256
-                    SHA256 sha256Hash = SHA256.Create();
-                    buffer = sha256Hash.ComputeHash(buffer);
-                    //Hash Output
-                    return (buildString(buffer));
-                case 3:
-                    //Create Instance of SHA512
-                    SHA512 sha512Hash = SHA512.Create();
-                    buffer = sha512Hash.ComputeHash(buffer);
-                    //Hash Output
-                    return (buildString(buffer));
+                //local variables
+                FileStream stream = new FileStream(file, FileMode.Open, FileAccess.Read);
+
+                byte[] buffer;// = new byte[stream.Length];
+                //stream.Read(buffer, 0, System.Convert.ToInt32(stream.Length));
+                //stream.Close();
+
+                switch (hashType)
+                {
+                    case 1:
+                        //Create Instance of MD5
+                        MD5 md5Hash = MD5.Create();
+                        buffer = md5Hash.ComputeHash(stream);
+                        Console.WriteLine(buildString(buffer));
+                        stream.Close();
+                        //Hash Output
+                        return (buildString(buffer));
+                    case 2:
+                        //Create Instance of SHA256
+                        SHA256 sha256Hash = SHA256.Create();
+                        buffer = sha256Hash.ComputeHash(stream);
+                        stream.Close();
+                        //Hash Output
+                        return (buildString(buffer));
+                    case 3:
+                        //Create Instance of SHA512
+                        SHA512 sha512Hash = SHA512.Create();
+                        buffer = sha512Hash.ComputeHash(stream);
+                        stream.Close();
+                        //Hash Output
+                        return (buildString(buffer));
+                }
+            }
+            catch
+            {
             }
             return "Invalid File";
         }
