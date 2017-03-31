@@ -155,7 +155,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Hash Calculator v1.1";
+            this.Text = "Hash Calculator v1.1.1";
             this.ResumeLayout(false);
             this.PerformLayout();
 
